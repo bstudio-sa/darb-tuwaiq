@@ -15,6 +15,9 @@
   color-scheme: light;
 }
 
+/* أي عنصر عليه hidden يختفي دائمًا (ضروري لأن display في الشاشات يتغلب على المتصفح) */
+[hidden] { display: none !important; }
+
 html, body {
   height: 100%;
   margin: 0;
