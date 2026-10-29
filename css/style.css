@@ -1,4 +1,4 @@
-/* مغامرات السعودية — تنسيق الواجهة
+/* درب طويق (TUWAIQ TRAIL) — تنسيق الواجهة
    الطبقات: اللعبة (canvas) ← العدادات ← أزرار اللمس ← الشاشات */
 :root {
   --ink: #3b1f14;
@@ -108,6 +108,13 @@ body { font-family: var(--f-body); color: var(--ink); }
 }
 .panel h1 { font-size: clamp(2.3rem, 7vw, 3.3rem); }
 .panel h2 { font-size: 2.1rem; }
+/* اسم اللعبة: ظل ذهبي متدرج مثل طبقات جرف طويق */
+.panel h1.game-title {
+  font-size: clamp(2.9rem, 9vw, 4.1rem);
+  line-height: 1.05;
+  padding-bottom: 6px;
+  text-shadow: 0 3px 0 var(--gold-l), 0 6px 0 rgba(156, 98, 16, 0.35);
+}
 .panel p { margin: 0; font-size: 1.05rem; line-height: 1.6; text-wrap: pretty; }
 .eyebrow {
   font-family: var(--f-body);
@@ -368,6 +375,7 @@ kbd {
 @media (max-height: 420px) {
   .panel { padding: 16px 20px 14px; gap: 9px; }
   .panel h1 { font-size: 2.2rem; }
+  .panel h1.game-title { font-size: 2.6rem; }
   .panel p { font-size: 0.95rem; line-height: 1.45; }
   .help { font-size: 0.85rem; padding: 7px 10px; }
   .tbtn { width: 62px; height: 62px; }
