@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#24140c">
+  <meta name="description" content="مغامرات السعودية: لعبة منصات Pixel Art في الواحة. اجمع العملات واقفز فوق الحفر والعقارب.">
+  <title>مغامرات السعودية | Saudi Adventures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@500;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--APP-START-->
+<div id="app">
+  <div id="game" aria-label="ساحة اللعب"></div>
+
+  <!-- العدادات -->
+  <div id="hud" hidden>
+    <div class="chip" aria-label="العملات">
+      <svg class="coin-ico" viewBox="0 0 6 6" aria-hidden="true"><rect x="1" y="0" width="4" height="6" fill="#9c6210"/><rect x="0" y="1" width="6" height="4" fill="#9c6210"/><rect x="1" y="1" width="4" height="4" fill="#f6c33b"/><rect x="1" y="1" width="1" height="1" fill="#fff4b8"/></svg>
+      <span class="count"><span id="coinCount">0</span><small> / <span id="coinTotal">0</span></small></span>
+    </div>
+    <div class="chip" id="hearts" role="img" aria-label="المحاولات"></div>
+    <div class="hud-spacer"></div>
+    <button class="icon-btn" id="btnMute" type="button" aria-label="كتم الصوت" title="كتم الصوت">
+      <svg class="ico-on" viewBox="0 0 11 10" aria-hidden="true" fill="currentColor"><rect x="0" y="3" width="2" height="4"/><rect x="2" y="2" width="1" height="6"/><rect x="3" y="1" width="1" height="8"/><rect x="4" y="0" width="1" height="10"/><rect x="7" y="2" width="1" height="6"/><rect x="9" y="1" width="1" height="8"/></svg>
+      <svg class="ico-off" viewBox="0 0 11 10" aria-hidden="true" fill="currentColor"><rect x="0" y="3" width="2" height="4"/><rect x="2" y="2" width="1" height="6"/><rect x="3" y="1" width="1" height="8"/><rect x="4" y="0" width="1" height="10"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="4" width="1" height="2"/><rect x="8" y="3" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/></svg>
+    </button>
+    <button class="icon-btn" id="btnPause" type="button" aria-label="إيقاف مؤقت" title="إيقاف مؤقت (Esc)">
+      <svg viewBox="0 0 8 8" aria-hidden="true" fill="currentColor"><rect x="1" y="1" width="2" height="6"/><rect x="5" y="1" width="2" height="6"/></svg>
+    </button>
+  </div>
+
+  <div id="toast" hidden></div>
+
+  <!-- أزرار اللمس (تظهر على الجوال فقط) -->
+  <div id="touch" dir="ltr" hidden>
+    <div class="dpad">
+      <button class="tbtn" type="button" data-act="left" aria-label="يسار">
+        <svg viewBox="0 0 7 8" aria-hidden="true" fill="currentColor"><rect x="0" y="3" width="2" height="2"/><rect x="2" y="2" width="2" height="4"/><rect x="4" y="1" width="2" height="6"/><rect x="6" y="0" width="1" height="8"/></svg>
+      </button>
+      <button class="tbtn" type="button" data-act="right" aria-label="يمين">
+        <svg viewBox="0 0 7 8" aria-hidden="true" fill="currentColor"><rect x="5" y="3" width="2" height="2"/><rect x="3" y="2" width="2" height="4"/><rect x="1" y="1" width="2" height="6"/><rect x="0" y="0" width="1" height="8"/></svg>
+      </button>
+    </div>
+    <button class="tbtn jump" type="button" data-act="jump" aria-label="قفز">قفز</button>
+  </div>
+
+  <!-- شاشة البداية -->
+  <div id="menu" class="screen scrollable">
+    <div class="panel">
+      <p class="eyebrow">Saudi Adventures</p>
+      <h1>مغامرات السعودية</h1>
+      <div class="title-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="menu-desc">امشِ في الواحة، اجمع العملات الذهبية والتمر، واقفز فوق الحفر والعقارب حتى تصل بوابة القرية.</p>
+      <fieldset class="picker">
+        <legend>اختر شخصيتك</legend>
+        <div class="picker-row">
+          <button class="pick" type="button" data-char="boy" aria-pressed="true">
+            <canvas width="64" height="84" data-preview="boy" aria-hidden="true"></canvas>
+            <span>مطلق</span>
+          </button>
+          <button class="pick" type="button" data-char="girl" aria-pressed="false">
+            <canvas width="64" height="84" data-preview="girl" aria-hidden="true"></canvas>
+            <span>نورة</span>
+          </button>
+        </div>
+      </fieldset>
+      <form class="start-form" id="startForm" autocomplete="off" novalidate>
+        <label for="playerName">اسمك في لوحة الأبطال</label>
+        <input id="playerName" name="playerName" type="text" maxlength="16" placeholder="اكتب اسمك" enterkeyhint="go">
+        <p class="form-msg" id="nameMsg" role="status"></p>
+        <div class="actions"><button class="btn primary" id="btnStart" type="submit">ابدأ اللعب</button></div>
+      </form>
+      <div class="help help-keys">
+        <div><kbd>← →</kbd><span>أو</span><kbd>A D</kbd><span>للمشي</span></div>
+        <div><kbd>Space</kbd><span>للقفز</span></div>
+        <div><kbd>Esc</kbd><span>إيقاف مؤقت</span></div>
+        <div><span>اقفز فوق العقرب لتهزمه</span></div>
+      </div>
+      <p class="help-touch">الأزرار يسار الشاشة للمشي، وزر «قفز» يمينها. اضغط مطولًا لتقفز أعلى.</p>
+      <p class="rotate-hint">للعب أفضل: أدر الجوال بالعرض</p>
+      <div class="actions">
+        <button class="btn ghost" id="btnBoardMenu" type="button">لوحة الأبطال</button>
+        <button class="btn ghost" id="btnMuteMenu" type="button">الصوت: يعمل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- الإيقاف المؤقت -->
+  <div id="pause" class="screen scrollable" hidden>
+    <div class="panel">
+      <h2>استراحة قصيرة</h2>
+      <div class="actions stack">
+        <button class="btn primary" id="btnResume" type="button">متابعة</button>
+        <button class="btn" id="btnRestart" type="button">إعادة المرحلة</button>
+        <button class="btn" id="btnMutePause" type="button">الصوت: يعمل</button>
+        <button class="btn ghost" id="btnToMenu" type="button">الشاشة الرئيسية</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- الفوز / الخسارة -->
+  <div id="result" class="screen scrollable" hidden>
+    <div class="panel">
+      <div class="stars" id="resultStars"></div>
+      <h2 id="resultTitle">أحسنت!</h2>
+      <p id="resultText"></p>
+      <dl class="stats" id="resultStats"></dl>
+      <p class="score-line">نقاطك: <strong id="resultScore">0</strong></p>
+      <p class="save-msg" id="saveMsg" role="status"></p>
+      <div class="actions">
+        <button class="btn primary" id="btnAgain" type="button">العب مرة أخرى</button>
+        <button class="btn ghost" id="btnResultBoard" type="button">لوحة الأبطال</button>
+        <button class="btn ghost" id="btnResultMenu" type="button">الشاشة الرئيسية</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- لوحة الأبطال -->
+  <div id="board" class="screen scrollable" hidden>
+    <div class="panel board-panel">
+      <h2>لوحة الأبطال</h2>
+      <p class="board-note" id="boardNote">أفضل 10 نتائج</p>
+      <ol class="board-list" id="boardList"></ol>
+      <div class="actions">
+        <button class="btn primary" id="btnBoardBack" type="button">رجوع</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- إذا لم تُحمّل مكتبة Phaser -->
+  <div id="loadError" class="screen scrollable" hidden>
+    <div class="panel">
+      <h2>تعذّر تحميل اللعبة</h2>
+      <p>مكتبة Phaser لم تُحمّل. تأكد من اتصال الإنترنت ثم حدّث الصفحة.</p>
+    </div>
+  </div>
+</div>
+<!--APP-END-->
+
+<!-- Phaser 3 (إصدار ثابت). إذا فشل الرابط الأول يُجرَّب رابط بديل -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+<script>window.Phaser || document.write('<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"><\/script>');</script>
+
+<!--GAME-SCRIPTS-START-->
+<script src="js/config.js"></script>
+<script src="js/level1.js"></script>
+<script src="js/art.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/input.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/scenes/BootScene.js"></script>
+<script src="js/scenes/GameScene.js"></script>
+<script src="js/main.js"></script>
+<!--GAME-SCRIPTS-END-->
+</body>
+</html>
